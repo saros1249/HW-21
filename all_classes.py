@@ -11,27 +11,34 @@ class Store(Storage):
         self.title = title
         self._capacity = capacity
 
-    @property
-    def get_free_space(self):
-        return Store.capacity - self._capacity
 
     @property
-    def get_items(self):
+    def get_free_space(self):
+        res = Store.capacity - self._capacity
+        return res
+
+    @property
+    def items(self):
         return self._items.items(self.title)
 
     @property
     def get_unique_items_count(self):
         return len(self._items)
 
+    @items.setter
+    def items(self, item):
+        self._items.update(item)
+
+
     def add(self, change_qnt):
-        qnt = self.get_items[self.title]
+        qnt = self.items[self.title]
         if (self.get_free_space + change_qnt) <= Store.capacity:
-            self.get_items[self.title] = (qnt + change_qnt)
+            self.items[self.title] = (qnt + change_qnt)
 
     def remove(self, change_qnt):
-        qnt = self.get_items[self.title]
+        qnt = self.items[self.title]
         if (self.get_free_space - change_qnt) >= 0:
-            self.get_items[self.title] = (qnt + change_qnt)
+            self.items[self.title] = (qnt + change_qnt)
 
 class Shop(Storage):
 
@@ -48,22 +55,24 @@ class Shop(Storage):
         return Shop.capacity - self._capacity
 
     @property
-    def get_items(self):
-        return self._items.items(self.title)
+    def items(self):
+        for item in self._items:
+            return item(self.title)
+
 
     @property
     def get_unique_items_count(self):
         return len(self._items)
 
     def add(self, change_qnt):
-        qnt = self.get_items[self.title]
+        qnt = self.items[self.title]
         if (self.get_free_space + change_qnt) <= Shop.capacity and self.get_unique_items_count < 5:
-            self.get_items[self.title] = (qnt + change_qnt)
+            self.items[self.title] = (qnt + change_qnt)
 
     def remove(self, change_qnt):
-        qnt = self.get_items[self.title]
+        qnt = self.items[self.title]
         if (self.get_free_space - change_qnt) >= 0:
-            self.get_items[self.title] = (qnt + change_qnt)
+            self.items[self.title] = (qnt + change_qnt)
 
 class Request():
     def __init__(self, where_from, to, amount, product):
@@ -76,4 +85,7 @@ class Request():
     def way(self, amount, product, where_from, to):
 
         return where_from, to, amount, product
+
+if __name__ == '__main__':
+    print(Store.get_free_space)
 

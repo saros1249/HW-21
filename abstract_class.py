@@ -14,12 +14,16 @@ class Storage(ABC):
 
     @property
     @abstractmethod
-    def get_items(self):
+    def items(self):
         pass
 
     @property
     @abstractmethod
     def get_unique_items_count(self):
+        pass
+
+    @items.setter
+    def items(self):
         pass
 
     @abstractmethod
