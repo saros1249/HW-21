@@ -45,7 +45,7 @@ class Shop(Storage):
 
     @property
     def get_free_space(self):
-        return Store.capacity - self._capacity
+        return Shop.capacity - self._capacity
 
     @property
     def get_items(self):
@@ -57,7 +57,7 @@ class Shop(Storage):
 
     def add(self, change_qnt):
         qnt = self.get_items[self.title]
-        if (self.get_free_space + change_qnt) <= Store.capacity and self.get_unique_items_count < 5:
+        if (self.get_free_space + change_qnt) <= Shop.capacity and self.get_unique_items_count < 5:
             self.get_items[self.title] = (qnt + change_qnt)
 
     def remove(self, change_qnt):
