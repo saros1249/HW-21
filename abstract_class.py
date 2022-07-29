@@ -3,8 +3,9 @@ from abc import ABC, abstractmethod
 
 class Storage(ABC):
 
-    def __init__(self):
-        self.items = item
+    @abstractmethod
+    def __init__(self, items, capacity):
+        self.items = items
         self.capacity = capacity
 
     @property
@@ -14,7 +15,12 @@ class Storage(ABC):
 
     @property
     @abstractmethod
-    def items(self):
+    def _get_items(self):
+        pass
+
+    @_get_items.setter
+    @abstractmethod
+    def _get_items(self, data):
         pass
 
     @property
@@ -22,15 +28,12 @@ class Storage(ABC):
     def get_unique_items_count(self):
         pass
 
-    @items.setter
-    def items(self):
+
+    @abstractmethod
+    def add(self, title, change_qnt):
         pass
 
     @abstractmethod
-    def add(self, change_qnt):
-        pass
-
-    @abstractmethod
-    def remove(self, change_qnt):
+    def remove(self, title, change_qnt):
         pass
 
