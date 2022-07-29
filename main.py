@@ -89,13 +89,34 @@ class Shop(Storage):
             print('Нет запрошенного количества')
 
 
-# class Request:
-#
-#     def __init__(self):
-#         pass
-#
-#     def way(self, amount, product, where_from, to):
-#         return where_from, to, amount, product
+class Request:
+
+    def __init__(self):
+
+        self.amount = int
+        self.product = ''
+        self.where_from = ''
+        self.to = ''
+
+
+    def way(self, amount, product, where_from, to):
+        print(f'Курьер забирает {amount} {product} из {where_from} для доставки в {to}')
+
+        if where_from == 'склад' and to == 'магазин':
+            var_d = store.get_items()
+        elif where_from == 'магазин' and where_from == 'склад':
+            var_d = shop.get_items()
+        else:
+            print(f'Ошибка. Места загрузки либо выгрузки не существует.')
+
+        if {product: amount} in var_d and amount <= var_d[product]:
+            print(f'Нужное количество есть на {where_from}')
+            print(f' Курьер забрал {amount} {product} со {where_from}\n '
+                  f'Курьер везет {amount} {product} со {where_from} в {to}\n'
+                  f'Курьер доставил {amount} {product} в {to}')
+
+        else:
+            print(f'Не хватает на {where_from}, попробуйте заказать меньше')
 
 if __name__ == '__main__':
     # print('Здравствуйте. Вас приветствует симулятор логистики. Давайте познакомимся. Как Вас зовут?')
@@ -107,26 +128,40 @@ if __name__ == '__main__':
     # else:
     store = Store()
     shop = Shop()
-    # request = Request()
+    request = Request()
     print('На складе доступно:')
     print(store.get_items())
     print('В магазине доступно:')
     print(shop.get_items())
     while True:
+
         amount = input('Введите количество товара, которое нужно переместить:')
         product = input('Введите название товара, который нужно переместить:')
         where_from = input('Введите место, откуда его нужно забрать товар:')
-        print(f'Курьер забирает {amount} {product} из {where_from}')
+        to = input('Введите место, куда нужно доставить товар:')
 
-
-        if where_from == 'склад':
-            var_d = store.get_items()
-        elif where_from == 'магазин':
-            var_d = shop.get_items()
-        else:
-            print(f'{where_from} - такого места не существует.')
-        print(var_d)
+        request.way(amount, product, where_from, to)
+        # print(f'Курьер забирает {amount} {product} из {where_from} для доставки в {to}')
+        #
+        # if where_from == 'склад' and to == 'магазин':
+        #     var_d = store.get_items()
+        # elif where_from == 'магазин' and where_from == 'склад':
+        #     var_d = shop.get_items()
+        # else:
+        #     print(f'Ошибка. Места загрузки либо выгрузки не существует.')
+        #
         # if {product: amount} in var_d and amount <= var_d[product]:
         #     print(f'Нужное количество есть на {where_from}')
+        #     print(f' Курьер забрал {amount} {product} со {where_from}\n '
+        #           f'Курьер везет {amount} {product} со {where_from} в {to}\n'
+        #           f'Курьер доставил {amount} {product} в {to}')
         # else:
         #     print(f'Не хватает на {where_from}, попробуйте заказать меньше')
+
+        print('На складе доступно:')
+        print(store.get_items())
+        print('В магазине доступно:')
+        print(shop.get_items())
+
+        print('')
+
