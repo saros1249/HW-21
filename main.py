@@ -128,8 +128,10 @@ class Request:
                              f'Курьер забрал {amount} {product} из {where_from}\n'
                              f'Курьер везет {amount} {product} из {where_from} в {to}\n'
                              f'Курьер доставил {amount} {product} в {to}')
+            var_where_from.add(product, amount)
             return print(f'Не хватает места в {to}, попробуйте заказать другое количество')
         return print(f'Не хватает в {where_from}, попробуйте заказать меньше')
+
 
 if __name__ == '__main__':
     print('Здравствуйте. Вас приветствует симулятор логистики. Давайте познакомимся. Как Вас зовут?')
